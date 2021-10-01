@@ -13,3 +13,5 @@ module.exports = {
         }
     }]
 }
+// 환경변수 실행하는방법
+// pm2 start ecosystem.config.js --env production
