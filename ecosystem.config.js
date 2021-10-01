@@ -1,9 +1,15 @@
 module.exports = {
     apps: [{
-        name: 'storage-app',
-        script: './dist/main.js',
-        // args: 'run start',
+        name: "storage-app",
+        script: "npm",
+        exec_mode: 'cluster',
         instances: 1,
-        exec_mode: 'cluster'
+        args: ['start'],
+        env: {
+            NODE_ENV: "dev",
+        },
+        env_production: {
+            NODE_ENV: "prod",
+        }
     }]
 }

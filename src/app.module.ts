@@ -8,8 +8,8 @@ import { AppService } from './app.service';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env.dev',
-      ignoreEnvFile: process.env.NODE_ENV === 'prod',
+      envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.prod',
+      ignoreEnvFile: process.env.NODE_ENV === 'prod', // prod env 파일은 ignore
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
