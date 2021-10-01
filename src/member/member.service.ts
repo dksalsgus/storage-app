@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Member } from './member.entity';
 import { MemberRepository } from './member.repository';
 import { MemberJoinDto } from './dto/memberjoin.dto';
@@ -21,5 +21,21 @@ export class MemberService {
     const saveMember = this.memberRepository.save(joinMember);
 
     return saveMember;
+  }
+
+  async memberFind(member_no: number): Promise<Member> {
+    const findMember = await this.memberRepository.findOne(member_no);
+    if (!findMember) {
+      throw new NotFoundException(`Not Found Member No.${member_no}`);
+    }
+    return findMember;
+  }
+
+  async memberDelete(member_no: number): Promise<Number> {
+    const ret = await this.memberRepository.delete(member_no);
+    if (ret.affected > 0) {
+      return ret.affected;
+    }
+    throw new NotFoundException(`Not Found Member No ${member_no}`);
   }
 }
