@@ -10,7 +10,7 @@ import { MemberModule } from './member/member.module';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.prod',
-      ignoreEnvFile: process.env.NODE_ENV === 'prod', // prod env 파일은 ignore
+      // ignoreEnvFile: process.env.NODE_ENV === 'prod', // prod env 파일은 ignore
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
