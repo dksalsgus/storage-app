@@ -19,7 +19,7 @@ import { MemberService } from './member.service';
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
-  @Post()
+  @Post('member')
   async postMemberJoin(@Body() memberJoinDto: MemberJoinDto): Promise<Member> {
     const member = await this.memberService.memberJoin(memberJoinDto);
     return member;
