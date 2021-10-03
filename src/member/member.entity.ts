@@ -16,7 +16,7 @@ export class Member extends BaseEntity {
   /**
    * Member Password
    */
-  @Column({ type: 'varchar', length: 20, nullable: true })
+  @Column({ type: 'varchar', length: 60, nullable: true })
   member_pw: string;
   /**
    * Member Name
