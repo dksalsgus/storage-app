@@ -2,6 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Member } from './member.entity';
 import { MemberRepository } from './member.repository';
 import { MemberJoinDto } from './dto/memberjoin.dto';
+import { MemberUpdateDto } from './dto/memberupdate.dto';
+import { getConnection, QueryResult } from 'typeorm';
+import { find } from 'node_modules/rxjs/dist/types';
 
 @Injectable()
 export class MemberService {
@@ -37,5 +40,36 @@ export class MemberService {
       return ret.affected;
     }
     throw new NotFoundException(`Not Found Member No ${member_no}`);
+  }
+
+  async memberUpdate(
+    member_no: number,
+    memberUpdateDto: MemberUpdateDto,
+  ): Promise<Member> {
+    const qr = await getConnection().createQueryRunner();
+    try {
+      await qr.startTransaction();
+
+      const findMember = await this.memberRepository.findOne(member_no);
+      if (!findMember) {
+        throw new NotFoundException(`Not Found Member memberNo ${member_no}`);
+      }
+
+      findMember.member_name = memberUpdateDto.member_name;
+      findMember.member_email = memberUpdateDto.member_email;
+      findMember.member_pw = memberUpdateDto.member_pw;
+
+      const updateMember = await this.memberRepository.save(findMember);
+
+      await qr.commitTransaction();
+
+      return updateMember;
+    } catch (error) {
+      await qr.rollbackTransaction();
+    } finally {
+      await qr.release();
+    }
+
+    return null;
   }
 }

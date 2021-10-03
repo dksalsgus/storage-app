@@ -6,11 +6,12 @@ import {
   Render,
   Param,
   Delete,
-  Res,
   HttpCode,
   HttpStatus,
+  Patch,
 } from '@nestjs/common';
 import { MemberJoinDto } from './dto/memberjoin.dto';
+import { MemberUpdateDto } from './dto/memberupdate.dto';
 import { Member } from './member.entity';
 import { MemberService } from './member.service';
 
@@ -38,5 +39,17 @@ export class MemberController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteMember(@Param('id') member_no: number): Promise<void> {
     await this.memberService.memberDelete(member_no);
+  }
+
+  @Patch(':id')
+  async updateMember(
+    @Param('id') member_no: number,
+    @Body() memberUpdateDto: MemberUpdateDto,
+  ): Promise<Member> {
+    const updateMember = await this.memberService.memberUpdate(
+      member_no,
+      memberUpdateDto,
+    );
+    return updateMember;
   }
 }
