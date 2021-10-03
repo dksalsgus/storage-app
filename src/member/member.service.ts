@@ -3,8 +3,8 @@ import { Member } from './member.entity';
 import { MemberRepository } from './member.repository';
 import { MemberJoinDto } from './dto/memberjoin.dto';
 import { MemberUpdateDto } from './dto/memberupdate.dto';
-import { getConnection, QueryResult } from 'typeorm';
-import { find } from 'node_modules/rxjs/dist/types';
+import { getConnection } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class MemberService {
@@ -15,7 +15,7 @@ export class MemberService {
 
     const member = new Member();
     member.member_id = member_id;
-    member.member_pw = member_pw;
+    member.member_pw = await bcrypt.hash(member_pw, 10);
     member.member_email = member_email;
     member.member_name = member_name;
 
@@ -71,5 +71,10 @@ export class MemberService {
     }
 
     return null;
+  }
+
+  async memberFindAll(): Promise<Member[]> {
+    const memberList = await this.memberRepository.find({});
+    return memberList;
   }
 }
