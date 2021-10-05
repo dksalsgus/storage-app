@@ -77,4 +77,12 @@ export class MemberService {
     const memberList = await this.memberRepository.find({});
     return memberList;
   }
+
+  async memberFindById(member_id: string): Promise<Member> {
+    const findMember = await this.memberRepository.findOne({ member_id });
+    if (!findMember) {
+      throw new NotFoundException(`Not Found Member Member Id is ${member_id}`);
+    }
+    return findMember;
+  }
 }
