@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MemberModule } from './member/member.module';
 import { AuthModule } from './auth/auth.module';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -13,18 +14,21 @@ import { AuthModule } from './auth/auth.module';
       envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.prod',
       // ignoreEnvFile: process.env.NODE_ENV === 'prod', // prod env 파일은 ignore
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DATABASE_HOST,
-      port: +process.env.DATABASE_PORT,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_DBNAME,
-      synchronize: true,
-      autoLoadEntities: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: async () => ({
+        type: 'mysql',
+        host: process.env.DATABASE_HOST,
+        port: +process.env.DATABASE_PORT,
+        username: process.env.DATABASE_USERNAME,
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE_DBNAME,
+        synchronize: true,
+        autoLoadEntities: true,
+      }),
     }),
     MemberModule,
     AuthModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
