@@ -5,10 +5,14 @@ import { MemberJoinDto } from './dto/memberjoin.dto';
 import { MemberUpdateDto } from './dto/memberupdate.dto';
 import { getConnection } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class MemberService {
-  constructor(private readonly memberRepository: MemberRepository) {}
+  constructor(
+    @InjectRepository(MemberRepository)
+    private readonly memberRepository: MemberRepository,
+  ) {}
 
   async memberJoin(memberJoinDto: MemberJoinDto): Promise<Member> {
     const { member_id, member_name, member_pw, member_email } = memberJoinDto;
