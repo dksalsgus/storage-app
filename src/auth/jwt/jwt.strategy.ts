@@ -19,11 +19,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any): Promise<Member> {
-    const { member_id } = payload;
-    const member = await this.memberRepository.findOne({ member_id });
+    const { userId } = payload;
+    const member = await this.memberRepository.findOne({ member_id: userId });
     return member;
-    // return {
-    //   userId: payload.userId, // member_id 로 식별
-    // };
   }
 }
