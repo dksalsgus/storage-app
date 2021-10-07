@@ -8,7 +8,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { User } from 'src/auth/member.decorator';
+import { AuthUser } from 'src/auth/member.decorator';
 import { Member } from 'src/member/member.entity';
 import { Storage } from './storage.entity';
 import { StorageService } from './storage.service';
@@ -17,19 +17,21 @@ import { CreateStorageDto } from './dto/createstorage.dto';
 import { UpdateStorageDto } from './dto/updatestorage.dto';
 
 @Controller('storage')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class StorageController {
   constructor(private readonly storageService: StorageService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get('list')
-  async getStorage(@User() member: Member): Promise<Storage[]> {
+  async getStorage(@AuthUser() member: Member): Promise<Storage[]> {
+    console.log(member);
     const storages = this.storageService.findAll(member);
     return storages;
   }
 
   @Post()
   async createStorage(
-    @User() member: Member,
+    @AuthUser() member: Member,
     @Body() createStorageDto: CreateStorageDto,
   ): Promise<Storage> {
     const storage = await this.storageService.create(member, createStorageDto);
