@@ -1,7 +1,7 @@
 import { IsEnum, IsString } from 'class-validator';
 import { EnStorageKind } from '../storage.entity';
 
-export class CreateStorageDto {
+export class UpdateStorageDto {
   /**
    * 냉장고 이름
    */

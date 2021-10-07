@@ -3,9 +3,9 @@ import { BaseEntity } from '../cls/baseentity';
 import { Member } from '../member/member.entity';
 
 export enum EnStorageKind {
-  일반 = 0,
-  양문형,
-  대용량,
+  일반 = '일반',
+  양문형 = '양문형',
+  대용량 = '대용량',
 }
 
 @Entity()
