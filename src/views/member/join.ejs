@@ -1,19 +1,80 @@
 <!DOCTYPE html>
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Member Join</title>
+    <style>
+      .main-form {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .join-text {
+        width: 30vw;
+        height: 10vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .join-text h1 {
+        opacity: 0;
+        transition: 2s;
+      }
+      .join-form {
+        width: 30vw;
+      }
+      .join-form form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .join-form form > input {
+        width: 15vw;
+        margin: 10px 0 10px 0;
+      }
+      .btn-form {
+        display: flex;
+        justify-content: space-around;
+        width: 15vw;
+      }
+
+      .btn-form input {
+        margin-top: 30px;
+        width: 4vw;
+        height: 4vh;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    </style>
+    <link rel="stylesheet" href="/css/default.css" />
+    <title>회원 가입 페이지</title>
   </head>
   <body>
-      <h1>회원가입 페이지</h1>
-      <form action="/member" method="post">
-        ID : <input type="text" name="member_id" id="">
-        PW : <input type="password" name="member_pw" id="">
-        NAME : <input type="text" name="member_name" id="">
-        EMAIL : <input type="text" name="member_email" id="">
-        <input type="submit" value="JOIN">
-        <input type="reset" value="RESET">
-      </form>
+    <section class="main-form">
+      <div class="join-text">
+        <h1 id="join-text">회원 가입</h1>
+      </div>
+      <div class="join-form">
+        <form action="/member" method="post">
+          <input type="text" name="member_id" id="" placeholder="ID" />
+          <input type="password" name="member_pw" id="" placeholder="PW" />
+          <input type="text" name="member_name" id="" placeholder="NAME" />
+          <input type="text" name="member_email" id="" placeholder="EMAIL" />
+          <div class="btn-form">
+            <input type="submit" value="JOIN" />
+            <input type="reset" value="RESET" />
+          </div>
+        </form>
+      </div>
+    </section>
+    <script>
+      setTimeout(function () {
+        const h1 = document.getElementById('join-text');
+        h1.style.opacity = 1;
+      }, 500);
+    </script>
   </body>
 </html>
