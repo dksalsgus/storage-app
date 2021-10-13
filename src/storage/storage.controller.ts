@@ -17,11 +17,10 @@ import { CreateStorageDto } from './dto/createstorage.dto';
 import { UpdateStorageDto } from './dto/updatestorage.dto';
 
 @Controller('storage')
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 export class StorageController {
   constructor(private readonly storageService: StorageService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('list')
   async getStorage(@AuthUser() member: Member): Promise<Storage[]> {
     console.log(member);
