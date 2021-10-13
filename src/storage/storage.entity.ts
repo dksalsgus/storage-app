@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Item } from 'src/item/item.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { BaseEntity } from '../cls/baseentity';
 import { Member } from '../member/member.entity';
 
@@ -33,4 +40,7 @@ export class Storage extends BaseEntity {
 
   @ManyToOne((type) => Member, (member) => member.member_no)
   member: Member;
+
+  @OneToMany((_type) => Item, (item) => item.storage)
+  items: Item[];
 }
