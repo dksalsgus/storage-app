@@ -20,7 +20,8 @@ export class ItemController {
     @Param('storage_no') storage_no: number,
     @Param('item_no') item_no: number,
   ): Promise<Item> {
-    return null;
+    const item = await this.itemService.findByIdItem(storage_no, item_no);
+    return item;
   }
   @Get(':storage_no/items')
   async findAllItem(@Param('storage_no') storage_no: number): Promise<Item[]> {

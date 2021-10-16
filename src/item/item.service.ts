@@ -44,16 +44,11 @@ export class ItemService {
   }
 
   async findByIdItem(storage_no: number, item_no: number): Promise<Item> {
-    const qr = getConnection().createQueryRunner();
-    try {
-      qr.startTransaction();
-      qr.commitTransaction();
-      return null;
-    } catch (error) {
-      qr.rollbackTransaction();
-    } finally {
-      qr.release();
-    }
+    const item = await this.itemRepository.findByStorageNoAndItemNo(
+      storage_no,
+      item_no,
+    );
+    return item;
   }
   async updateItem(storage_no: number, item_no: number): Promise<Item> {
     const qr = getConnection().createQueryRunner();
