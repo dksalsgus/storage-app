@@ -77,8 +77,9 @@ export class ItemService {
     const qr = getConnection().createQueryRunner();
     try {
       qr.startTransaction();
+      const item = await this.findByIdItem(storage_no, item_no);
+      await this.itemRepository.delete({ item_no: item.item_no });
       qr.commitTransaction();
-      return null;
     } catch (error) {
       qr.rollbackTransaction();
     } finally {

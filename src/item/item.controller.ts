@@ -50,11 +50,11 @@ export class ItemController {
     );
     return item;
   }
-  @Delete('storage_no/item/:item_no')
+  @Delete(':storage_no/item/:item_no')
   async deleteItem(
     @Param('storage_no') storage_no: number,
     @Param('item_no') item_no: number,
   ): Promise<void> {
-    return null;
+    await this.itemService.deleteItem(storage_no, item_no);
   }
 }
