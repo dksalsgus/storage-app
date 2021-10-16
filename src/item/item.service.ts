@@ -80,15 +80,7 @@ export class ItemService {
     }
   }
   async findAllItem(storage_no: number): Promise<Item[]> {
-    const qr = getConnection().createQueryRunner();
-    try {
-      qr.startTransaction();
-      qr.commitTransaction();
-      return null;
-    } catch (error) {
-      qr.rollbackTransaction();
-    } finally {
-      qr.release();
-    }
+    const items = await this.itemRepository.findAllByStorageNo(storage_no);
+    return items;
   }
 }
