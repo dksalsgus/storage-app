@@ -10,6 +10,7 @@ import {
 import { ItemService } from './item.service';
 import { Item } from './item.entity';
 import { CreateItemDto } from './create-item.dto';
+import { UpdateItmeDto } from './dto/update-item.dto';
 
 @Controller()
 export class ItemController {
@@ -40,8 +41,14 @@ export class ItemController {
   async updateItem(
     @Param('storage_no') storage_no: number,
     @Param('item_no') item_no: number,
+    @Body() updateItmeDto: UpdateItmeDto,
   ): Promise<Item> {
-    return null;
+    const item = await this.itemService.updateItem(
+      storage_no,
+      item_no,
+      updateItmeDto,
+    );
+    return item;
   }
   @Delete('storage_no/item/:item_no')
   async deleteItem(

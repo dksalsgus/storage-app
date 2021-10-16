@@ -5,6 +5,7 @@ import { Item } from './item.entity';
 import { StorageService } from '../storage/storage.service';
 import { CreateItemDto } from './create-item.dto';
 import { getConnection, QueryResult } from 'typeorm';
+import { UpdateItmeDto } from './dto/update-item.dto';
 
 @Injectable()
 export class ItemService {
@@ -50,12 +51,22 @@ export class ItemService {
     );
     return item;
   }
-  async updateItem(storage_no: number, item_no: number): Promise<Item> {
+  async updateItem(
+    storage_no: number,
+    item_no: number,
+    updateItmeDto: UpdateItmeDto,
+  ): Promise<Item> {
     const qr = getConnection().createQueryRunner();
     try {
       qr.startTransaction();
+      const findItem = await this.findByIdItem(storage_no, item_no);
+      findItem.item_name = updateItmeDto.item_name;
+      findItem.item_kind = updateItmeDto.item_kind;
+      findItem.item_expire = updateItmeDto.item_expire;
+
+      const item = await this.itemRepository.save(findItem);
       qr.commitTransaction();
-      return null;
+      return item;
     } catch (error) {
       qr.rollbackTransaction();
     } finally {
