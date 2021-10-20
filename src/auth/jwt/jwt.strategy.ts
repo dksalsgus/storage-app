@@ -5,6 +5,15 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Member } from 'src/member/member.entity';
 import { MemberRepository } from 'src/member/member.repository';
 
+const fromAuthCookie = function () {
+  return function (request) {
+    let token = null;
+    if (request && request.cookies) {
+      token = request.cookies['Authorization'];
+    }
+    return token;
+  };
+};
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -12,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private memberRepository: MemberRepository,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: fromAuthCookie(), //ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET,
     });
