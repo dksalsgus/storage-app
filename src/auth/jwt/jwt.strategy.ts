@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Member } from 'src/member/member.entity';
 import { MemberRepository } from 'src/member/member.repository';
 
 const fromAuthCookie = function () {
-  return function (request) {
+  return function (request: Request) {
     let token = null;
     if (request && request.cookies) {
       token = request.cookies['Authorization'];
