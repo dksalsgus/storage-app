@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ItemRepository } from './item.repository';
 import { Item } from './item.entity';
 import { StorageService } from '../storage/storage.service';
-import { CreateItemDto } from './create-item.dto';
+import { CreateItemDto } from './dto/create-item.dto';
 import { getConnection, QueryResult } from 'typeorm';
 import { UpdateItmeDto } from './dto/update-item.dto';
 

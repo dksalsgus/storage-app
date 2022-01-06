@@ -1,15 +1,12 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsString } from 'class-validator';
 import { EnStorageKind } from '../storage.entity';
 
 export class UpdateStorageDto {
-  /**
-   * 냉장고 이름
-   */
   @IsString()
+  @ApiProperty({description:'냉장고 이름'})
   storage_name: string;
-  /**
-   * 냉장고 종류
-   */
   @IsEnum(EnStorageKind)
+  @ApiProperty({description:'냉장고 종류'})
   storage_kind: EnStorageKind;
 }

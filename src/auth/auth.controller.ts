@@ -8,16 +8,19 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { AuthLoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './jwt/jwt-auth.guard';
 
 @Controller('auth')
+@ApiTags('Auth API')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post()
+  @ApiOperation({summary:'Login API', description:'Login'})
   async login(
     @Res({ passthrough: true }) res: Response,
     @Req() req: Request,
@@ -32,12 +35,10 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
+  @ApiOperation({summary:'Auth Check'})
   async AuthCheck(@Req() req: Request) {
     console.log(req.user);
     return req.user;
   }
 
-  @Get('login')
-  @Render('auth/login.ejs')
-  LoginPage() {}
 }
